@@ -1,0 +1,99 @@
+﻿@using KonrolnayaBlazor.MongoDB
+@inherits LayoutComponentBase
+
+<PageTitle>KonrolnayaBlazor</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <link rel="stylesheet" href="~/css/site.css"/>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+        
+        
+        <div class="signIn">
+            
+            <div class="divBox">
+                <p>Login</p>
+                <input @bind-value="@itemLogin"/>
+            </div>
+
+            <div class="divBox">
+                <p>Password</p>
+                <input @bind-value="@itemPassword"/>
+            </div>
+            
+            <div class="divBox">
+                <p>Confirm the password</p>
+                <input @bind-value="@itemConfirm"/>
+            </div>
+            
+            <div class="divBox">
+                <p>FName</p>
+                <input @bind-value="@itemFName"/>
+            </div>
+            
+            <div class="divBox">
+                <p>LName</p>
+                <input @bind-value="@itemLName"/>
+            </div>
+            
+            <div class="divBox">
+                <p>Email</p>
+                <input @bind-value="@itemEmail"/>
+            </div>
+            
+            <button class="btn save" @onclick="isConfirm">Save</button>
+            
+        </div>
+
+        @code{
+            private string itemLogin = "";
+            private string itemPassword = "";
+            private string itemConfirm = "";
+            private string itemFName = "";
+            private string itemLName = "";
+            private string itemEmail = "";
+            
+            
+            private int currentCount = 0;
+
+            public void isConfirm()
+            {
+                if (itemLogin != "" && itemPassword != "" && itemConfirm != "" && itemFName != "" && itemLName != "" && itemPassword != "")
+                {
+                    if (itemConfirm == itemPassword)
+                    {
+                        IncrementCount();
+                    }
+                }
+                }
+                
+                
+                
+            
+            
+            private void IncrementCount()
+            {
+                User user = new User();
+                user.Login = itemLogin;
+                user.Password = itemPassword;
+                user.FName = itemFName;
+                user.LName = itemLName;
+                user.Email = itemEmail;
+
+                MongoDBAction.AddToDatabase(user);
+            }
+        }
+
+    </main>
+</div>

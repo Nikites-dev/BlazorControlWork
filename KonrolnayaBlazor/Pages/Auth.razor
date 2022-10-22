@@ -1,0 +1,85 @@
+﻿@page "/auth"
+
+@using KonrolnayaBlazor.MongoDB
+@inherits LayoutComponentBase
+
+<PageTitle>KonrolnayaBlazor</PageTitle>
+<h1 class="titleInfo">Sign in</h1>
+<link rel="stylesheet" href="~/css/site.css"/>
+    
+    <main>
+        
+        <div id="background">
+            <div class="userCard">
+                <p>@txtFName</p>
+                <p>@txtLName</p>
+            </div>
+            
+            <div class="top-row px-4">
+                <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            </div>
+
+            <article class="content px-4">
+                @Body
+            </article>
+
+
+            <div class="signIn">
+
+                <div class="divBox">
+                    <p>Login</p>
+                    <input @bind-value="@itemLogin"/>
+                </div>
+
+                <div class="divBox">
+                    <p>Password</p>
+                    <input @bind-value="@itemPassword"/>
+                </div>
+
+                <button class="btn save" @onclick="isConfirm">Save</button>
+
+            </div>
+
+            @code{
+                private string itemLogin = "";
+                private string itemPassword = "";
+                private string itemConfirm = "";
+                private string itemFName = "";
+                private string itemLName = "";
+                private string itemEmail = "";
+
+                private String txtFName = "";
+                private String txtLName = "";
+
+                private int currentCount = 0;
+
+                public void isConfirm()
+                {
+
+                    IncrementCount();
+
+                }
+
+
+
+
+
+                private void IncrementCount()
+                {
+                    User user = MongoDBAction.FindByName(itemLogin, itemPassword);
+
+                    txtFName = user.FName;
+                    txtLName = user.LName;
+
+
+
+                }
+
+            }
+
+        </div>
+        
+    </main>
+
+    
+
